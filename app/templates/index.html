@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalil Travel</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons (No Emojis allowed) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet.js for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="glass-header">
+        <div class="logo">
+            <i class="fa-solid fa-compass"></i> Dalil Travel
+        </div>
+        <nav id="desktop-nav">
+            <div class="language-switcher">
+                <button onclick="window.i18n.setLanguage('en')">EN</button>
+                <button onclick="window.i18n.setLanguage('fr')">FR</button>
+                <button onclick="window.i18n.setLanguage('ar')">عربي</button>
+            </div>
+            <a href="/partner" data-link class="partner-link" data-i18n="menu.partner">Join as Partner</a>
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </nav>
+        
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a href="/" data-link onclick="document.getElementById('mobile-menu').classList.remove('active')"><i class="fa-solid fa-house"></i> <span data-i18n="menu.home">Home</span></a></li>
+                <li><a href="/dashboard" data-link onclick="document.getElementById('mobile-menu').classList.remove('active')"><i class="fa-solid fa-suitcase"></i> <span data-i18n="menu.dashboard">Dashboard</span></a></li>
+                <li><a href="/partner" data-link onclick="document.getElementById('mobile-menu').classList.remove('active')"><i class="fa-solid fa-handshake"></i> <span data-i18n="menu.partner">Join as Partner</span></a></li>
+                <li id="emergency-btn"><a href="#" onclick="window.app.showEmergencyModal()"><i class="fa-solid fa-truck-medical"></i> <span data-i18n="menu.emergency">Emergency</span></a></li>
+                <li id="auth-menu-item"><a href="/login" data-link onclick="document.getElementById('mobile-menu').classList.remove('active')"><i class="fa-solid fa-user"></i> <span data-i18n="menu.login">Login / Register</span></a></li>
+                <li id="logout-menu-item" style="display: none;"><a href="#" onclick="window.app.logout()"><i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="menu.logout">Logout</span></a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main id="app">
+        <!-- SPA content injected here -->
+    </main>
+
+    <!-- Bottom Navigation Bar (Mobile) -->
+    <div class="bottom-nav">
+        <a href="/" data-link class="active" id="bnav-home"><i class="fa-solid fa-house"></i><span data-i18n="menu.home">Home</span></a>
+        <a href="/favorites" data-link id="bnav-favorites"><i class="fa-solid fa-heart"></i><span data-i18n="menu.favorites">Favorites</span></a>
+        <a href="/dashboard" data-link id="bnav-bookings"><i class="fa-solid fa-suitcase"></i><span data-i18n="menu.dashboard">Bookings</span></a>
+        <a href="/login" data-link id="bnav-profile"><i class="fa-solid fa-user"></i><span data-i18n="menu.profile">Profile</span></a>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergency-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <span class="close-modal" onclick="window.app.closeEmergencyModal()">&times;</span>
+            <h2 data-i18n="emergency.title">Emergency Services</h2>
+            <div class="emergency-grid">
+                <button class="emergency-btn police"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="emergency.police">Police (17)</span></button>
+                <button class="emergency-btn gendarmerie"><i class="fa-solid fa-building-shield"></i> <span data-i18n="emergency.gendarmerie">Gendarmerie (1055)</span></button>
+                <button class="emergency-btn ambulance"><i class="fa-solid fa-truck-medical"></i> <span data-i18n="emergency.ambulance">Ambulance (14)</span></button>
+                <button class="emergency-btn civil"><i class="fa-solid fa-fire-extinguisher"></i> <span data-i18n="emergency.civil">Civil Protection (14)</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/state.js"></script>
+    <script src="/static/js/i18n.js"></script>
+    <script src="/static/js/router.js"></script>
+    <script src="/static/js/app.js"></script>
+
+    <!-- Global Loader -->
+    <div id="global-loader">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+        <h3 data-i18n="loader.text" style="color: var(--primary);">Loading...</h3>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+</body>
+</html>
