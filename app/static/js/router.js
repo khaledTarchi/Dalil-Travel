@@ -104,6 +104,15 @@ window.router = {
                 <button class="btn btn-success" style="padding: 1rem 2rem; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onclick="window.router.navigateTo('/partner')" data-i18n="promo.btn">Claim Offer</button>
             </div>
 
+            <!-- Advertisement Video Section -->
+            <section class="section" style="background: rgba(46, 139, 87, 0.05); padding: 3rem 1rem; border-radius: 16px; margin: 2rem auto; text-align: center; max-width: 1200px;">
+                <h2 style="color: var(--secondary); margin-bottom: 0.5rem; font-size: 2rem;" data-i18n="home.ad.title">Discover Algeria Through Our Lens</h2>
+                <p style="color: #666; margin-bottom: 1.5rem; font-size: 1.1rem;" data-i18n="home.ad.desc">Watch this short video to see the beauty of Algeria.</p>
+                <div style="max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                    <video src="/static/media/vidio.mp4" controls muted autoplay loop playsinline style="width: 100%; display: block; border-radius: 16px;"></video>
+                </div>
+            </section>
+
             <section class="section">
                 <h2 class="section-title" data-i18n="home.popular">Popular Destinations</h2>
                 <div class="destinations-grid">

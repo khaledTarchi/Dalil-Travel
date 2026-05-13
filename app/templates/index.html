@@ -20,7 +20,7 @@
 </head>
 <body>
     <header class="glass-header">
-        <div class="logo">
+        <div class="logo" onclick="window.app.showLogoModal()" style="cursor: pointer;">
             <i class="fa-solid fa-compass"></i> Dalil Travel
         </div>
         <nav id="desktop-nav">
@@ -70,6 +70,16 @@
                 <button class="emergency-btn ambulance"><i class="fa-solid fa-truck-medical"></i> <span data-i18n="emergency.ambulance">Ambulance (14)</span></button>
                 <button class="emergency-btn civil"><i class="fa-solid fa-fire-extinguisher"></i> <span data-i18n="emergency.civil">Civil Protection (14)</span></button>
             </div>
+        </div>
+    </div>
+
+    <!-- Logo Modal -->
+    <div id="logo-modal" class="modal">
+        <div class="modal-content glass-panel" style="text-align: center; max-width: 500px;">
+            <span class="close-modal" onclick="window.app.closeLogoModal()">&times;</span>
+            <img src="/static/img/dalil_logo.png" alt="Dalil Travel Logo" style="width: 100%; max-width: 300px; border-radius: 12px; margin-top: 1rem;">
+            <h2 style="margin-top: 1rem; color: var(--primary);">Dalil Travel</h2>
+            <p data-i18n="home.hero.title" style="color: #666;">Discover the Magic of Algeria</p>
         </div>
     </div>
 

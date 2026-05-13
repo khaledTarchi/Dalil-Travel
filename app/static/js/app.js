@@ -348,6 +348,14 @@ window.app = {
         document.getElementById('emergency-modal').classList.remove('active');
     },
 
+    showLogoModal() {
+        document.getElementById('logo-modal').classList.add('active');
+    },
+
+    closeLogoModal() {
+        document.getElementById('logo-modal').classList.remove('active');
+    },
+
     toggleFavorite(id, event) {
         event.stopPropagation();
         let favorites = JSON.parse(localStorage.getItem('dalil_favorites') || '[]');
