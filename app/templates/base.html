@@ -18,7 +18,7 @@
     
     {% block head %}{% endblock %}
 </head>
-<body dir="{{ 'rtl' if current_lang == 'ar' else 'ltr' }}">
+<body dir="{{ 'rtl' if current_lang == 'ar' else 'ltr' }}" class="{% block body_class %}{% endblock %}">
 
     <!-- Ad Banner Space -->
     <div class="ad-banner">
@@ -30,8 +30,7 @@
         <div class="container header-container">
             <!-- Pure CSS Logo -->
             <a href="{{ url_for('main.index') }}" class="logo">
-                <div class="logo-icon"></div>
-                <span class="logo-text">{{ SITE_NAME }}</span>
+                <img src="{{ url_for('static', filename='img/new_logo.jpg') }}" alt="{{ SITE_NAME }}" class="logo-img">
             </a>
             
             <nav class="desktop-nav">
@@ -62,7 +61,7 @@
     <footer class="main-footer">
         <div class="container footer-content">
             <div class="footer-brand">
-                <div class="logo-icon"></div>
+                <img src="{{ url_for('static', filename='img/new_logo.jpg') }}" alt="{{ SITE_NAME }}" class="logo-img" style="filter: grayscale(100%) opacity(0.7);">
                 <p>{{ SITE_NAME }} - {{ _t('Discover alternative accommodations in remote areas of Algeria.') }}</p>
             </div>
             <div class="footer-links">

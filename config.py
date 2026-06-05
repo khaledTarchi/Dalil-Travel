@@ -6,7 +6,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # Global Config Variables
-    SITE_NAME = 'OasisStay Algeria'
+    SITE_NAME = 'Dhiafa dz'
     CURRENCY = 'DZD'
     SUPPORTED_LANGUAGES = ['en', 'fr', 'ar']
     DEFAULT_LANGUAGE = 'fr'
