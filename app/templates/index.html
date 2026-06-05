@@ -3,7 +3,6 @@
 {% block body_class %}no-scroll{% endblock %}
 
 {% block head %}
-<!-- Removed map from home page per user request -->
 <style>
 /* Auto-changing background slider for hero */
 .hero-slider {
@@ -51,21 +50,26 @@
     <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?q=80&w=1920&auto=format&fit=crop');"></div>
 </div>
 
-<div class="container home-wrapper glass-effect" style="background: rgba(253, 250, 246, 0.85); border-radius: 12px; margin-top: 1vh; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+<div class="container home-wrapper" style="position: relative; z-index: 2; height: calc(100vh - 100px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2vh 0;">
     
-    <h1 style="margin: 0;">{{ _t("Discover Algeria's Hidden Gems") }}</h1>
-    <p style="text-align: center; margin: 0; color: var(--text-muted); font-size: 0.9rem; max-width: 800px;">
-        {{ _t("Book exclusive guesthouses, eco-lodges, and alternative accommodations in the most remote and breathtaking regions of the Sahara.") }}
-    </p>
+    <!-- Logo & Subtitle floating over background -->
+    <div style="text-align: center; margin-bottom: 2vh; width: 100%;">
+        <img src="{{ url_for('static', filename='img/new_logo.png') }}" alt="{{ SITE_NAME }}" style="height: 15vh; max-height: 120px; min-height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">
+        <p style="margin: 1.5vh auto 0; color: white; font-size: 1.1rem; max-width: 800px; text-shadow: 1px 1px 4px rgba(0,0,0,0.9); font-weight: 500; line-height: 1.4;">
+            {{ _t("Book exclusive guesthouses, eco-lodges, and alternative accommodations in the most remote and breathtaking regions of the Sahara.") }}
+        </p>
+    </div>
     
-    <form action="{{ url_for('main.explore') }}" method="GET" class="search-bar compact-search">
-        <input type="text" name="region" placeholder="{{ _t('Search by region (e.g. Tassili, Brezina...)') }}" required>
-        <button type="submit" class="btn-primary">{{ _t('Search') }}</button>
+    <!-- Search Bar directly on background -->
+    <form action="{{ url_for('main.explore') }}" method="GET" class="search-bar compact-search" style="margin-bottom: 4vh; width: 100%; max-width: 700px;">
+        <input type="text" name="region" placeholder="{{ _t('Search by region (e.g. Tassili, Brezina...)') }}" required style="box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-size: 1.1rem; padding: 1rem 1.5rem;">
+        <button type="submit" class="btn-primary" style="box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-size: 1.1rem; padding: 1rem 2rem;">{{ _t('Search') }}</button>
     </form>
 
-    <div class="compact-cards">
+    <!-- Interactive Cards Grid (3 max visible, horizontal scroll on mobile) -->
+    <div class="cards-container">
         <!-- Location Card 1 -->
-        <a href="{{ url_for('main.explore', region='Tassili') }}" class="compact-card">
+        <a href="{{ url_for('main.explore', region='Tassili') }}" class="hero-card">
             <img src="{{ url_for('static', filename='img/tassili_location.png') }}" alt="Tassili N'Ajjer">
             <div class="content">
                 <h3>{{ _t("Tassili N'Ajjer") }}</h3>
@@ -74,7 +78,7 @@
         </a>
         
         <!-- Location Card 2 -->
-        <a href="{{ url_for('main.explore', region='Brezina') }}" class="compact-card">
+        <a href="{{ url_for('main.explore', region='Brezina') }}" class="hero-card">
             <img src="{{ url_for('static', filename='img/brezina_location.png') }}" alt="Brezina">
             <div class="content">
                 <h3>{{ _t("Brezina") }}</h3>
@@ -83,7 +87,7 @@
         </a>
         
         <!-- Location Card 3 -->
-        <a href="{{ url_for('main.explore', region='Timimoun') }}" class="compact-card">
+        <a href="{{ url_for('main.explore', region='Timimoun') }}" class="hero-card">
             <img src="{{ url_for('static', filename='img/timimoun_location.png') }}" alt="Timimoun">
             <div class="content">
                 <h3>{{ _t("Timimoun") }}</h3>
@@ -92,7 +96,7 @@
         </a>
         
         <!-- Location Card 4 (Hidden initially) -->
-        <a href="{{ url_for('main.explore', region='Djanet') }}" class="compact-card hidden-card" id="card4">
+        <a href="{{ url_for('main.explore', region='Djanet') }}" class="hero-card hidden-card" id="card4">
             <img src="{{ url_for('static', filename='img/djanet_location.png') }}" alt="Djanet">
             <div class="content">
                 <h3>{{ _t("Djanet") }}</h3>
@@ -103,10 +107,10 @@
 
     <button id="toggleCardsBtn">{{ _t("Show All") }}</button>
 
-    <!-- Advertisement -->
-    <div class="compact-ad">
+    <!-- Advertisement (White box preserved) -->
+    <div class="hero-ad">
         <img src="{{ url_for('static', filename='img/banana_ad.png') }}" alt="Tuareg Tour Ad">
-        <div class="compact-ad-content">
+        <div class="hero-ad-content">
             <h3>{{ _t("Explore the Sahara with Tuareg 4x4 Tours!") }}</h3>
             <p>{{ _t("Exclusive 20% off for OasisStay members on 5-day expeditions across the Tassili N'Ajjer.") }}</p>
             <button class="btn-primary">{{ _t("Claim Offer Now") }}</button>
@@ -130,14 +134,18 @@
             }, 5000);
         }
 
-        // Toggle cards
+        // Toggle cards logic
         const toggleBtn = document.getElementById('toggleCardsBtn');
         const hiddenCard = document.getElementById('card4');
+        const cardsContainer = document.querySelector('.cards-container');
         
         if(toggleBtn && hiddenCard) {
             toggleBtn.addEventListener('click', () => {
                 hiddenCard.classList.remove('hidden-card');
                 toggleBtn.style.display = 'none'; // Hide button after showing
+                
+                // On desktop, changing to 4 cards might break the 3-columns rule or shrink them.
+                // The CSS ensures flex wrap or horizontal scroll, keeping the cards large!
             });
         }
     });
