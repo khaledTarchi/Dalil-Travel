@@ -9,4 +9,4 @@ class Config:
     SITE_NAME = 'OasisStay Algeria'
     CURRENCY = 'DZD'
     SUPPORTED_LANGUAGES = ['en', 'fr', 'ar']
-    DEFAULT_LANGUAGE = 'en'
+    DEFAULT_LANGUAGE = 'fr'

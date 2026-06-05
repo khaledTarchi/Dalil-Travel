@@ -41,7 +41,7 @@
                 <a href="{{ url_for('main.register_property') }}" class="btn-primary">{{ _t('Register Property') }}</a>
                 
                 <div class="language-switcher">
-                    <form action="" method="get" id="lang-form">
+                    <form action="{{ url_for('main.set_lang') }}" method="get" id="lang-form">
                         <select name="lang" onchange="document.getElementById('lang-form').submit()">
                             <option value="en" {% if current_lang == 'en' %}selected{% endif %}>EN</option>
                             <option value="fr" {% if current_lang == 'fr' %}selected{% endif %}>FR</option>

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, make_response
 from ..models import Property, Meal, RegistrationRequest
 from ..extensions import db
 
@@ -8,6 +8,14 @@ main_bp = Blueprint('main', __name__)
 def index():
     # Home Page
     return render_template('index.html')
+
+@main_bp.route('/set_lang')
+def set_lang():
+    lang = request.args.get('lang', 'fr')
+    referrer = request.referrer or url_for('main.index')
+    resp = make_response(redirect(referrer))
+    resp.set_cookie('lang', lang, max_age=60*60*24*365) # 1 year
+    return resp
 
 @main_bp.route('/explore')
 def explore():
