@@ -3,70 +3,70 @@
 {% block content %}
 <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
     <div style="text-align: center; margin-bottom: 3rem;">
-        <h2>B2B Host Registration Portal</h2>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Join our platform to list your guesthouse or eco-lodge. Share the beauty of your isolated region with travelers from around the world.</p>
+        <h2>{{ _t('B2B Host Registration Portal') }}</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">{{ _t('Join our platform to list your guesthouse or eco-lodge. Share the beauty of your isolated region with travelers from around the world.') }}</p>
     </div>
 
     <form class="registration-form" action="{{ url_for('main.register_property') }}" method="POST">
-        <h3>Host Information</h3>
+        <h3>{{ _t('Host Information') }}</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
             <div class="form-group">
-                <label for="full_name">Full Name</label>
+                <label for="full_name">{{ _t('Full Name') }}</label>
                 <input type="text" id="full_name" name="full_name" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="phone">Phone Number</label>
+                <label for="phone">{{ _t('Phone Number') }}</label>
                 <input type="tel" id="phone" name="phone" class="form-control" required>
             </div>
         </div>
         
-        <h3 style="margin-top: 2rem;">Property Details</h3>
+        <h3 style="margin-top: 2rem;">{{ _t('Property Details') }}</h3>
         <div class="form-group">
-            <label for="address">Full Address / Location Coordinates</label>
-            <input type="text" id="address" name="address" class="form-control" placeholder="e.g. Oasis of Tiout, Naama..." required>
+            <label for="address">{{ _t('Full Address / Location Coordinates') }}</label>
+            <input type="text" id="address" name="address" class="form-control" placeholder="{{ _t('e.g. Oasis of Tiout, Naama...') }}" required>
         </div>
         
         <div class="form-group">
-            <label for="image_urls">Image URLs (comma separated)</label>
+            <label for="image_urls">{{ _t('Image URLs (comma separated)') }}</label>
             <input type="url" id="image_urls" name="image_urls" class="form-control" placeholder="https://example.com/image1.jpg, ...">
         </div>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
             <div class="form-group">
-                <label for="capacity">Sleeping Capacity</label>
+                <label for="capacity">{{ _t('Sleeping Capacity') }}</label>
                 <input type="number" id="capacity" name="capacity" class="form-control" min="1" required>
             </div>
             <div class="form-group">
-                <label for="power_source">Type of Energy Source</label>
+                <label for="power_source">{{ _t('Type of Energy Source') }}</label>
                 <select id="power_source" name="power_source" class="form-control" required>
-                    <option value="Solar Panels">Solar Panels</option>
-                    <option value="National Grid">National Grid</option>
-                    <option value="Generator">Generator</option>
-                    <option value="None">None (Pure Eco)</option>
+                    <option value="Solar Panels">{{ _t('Solar Panels') }}</option>
+                    <option value="National Grid">{{ _t('National Grid') }}</option>
+                    <option value="Generator">{{ _t('Generator') }}</option>
+                    <option value="None">{{ _t('None (Pure Eco)') }}</option>
                 </select>
             </div>
             <div class="form-group" style="display: flex; flex-direction: column; justify-content: center;">
-                <label>Internet Availability</label>
+                <label>{{ _t('Internet Availability') }}</label>
                 <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: normal;">
                     <input type="checkbox" name="has_internet" id="has_internet" style="width: 20px; height: 20px;">
-                    Yes, internet/network is available
+                    {{ _t('Yes, internet/network is available') }}
                 </label>
             </div>
         </div>
 
-        <h3 style="margin-top: 2rem;">Local Meals</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Specify the traditional dishes you can provide along with their pricing.</p>
+        <h3 style="margin-top: 2rem;">{{ _t('Local Meals') }}</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">{{ _t('Specify the traditional dishes you can provide along with their pricing.') }}</p>
         <div class="form-group">
             <textarea id="meals_offered" name="meals_offered" class="form-control" placeholder="e.g. Desert Couscous (1500 DZD), Mella Bread (300 DZD)"></textarea>
         </div>
 
-        <h3 style="margin-top: 2rem;">More Details About the House</h3>
+        <h3 style="margin-top: 2rem;">{{ _t('More Details About the House') }}</h3>
         <div class="form-group">
             <textarea id="story" name="story" class="form-control" placeholder="Tell us about the house history, its architecture, and what makes your region special..."></textarea>
         </div>
         
         <button type="submit" class="btn-primary" style="width: 100%; font-size: 1.25rem; margin-top: 2rem;">{{ _t('Submit Request') }}</button>
-        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">* Your request will be reviewed by our admin team before publication.</p>
+        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">{{ _t('* Your request will be reviewed by our admin team before publication.') }}</p>
     </form>
 </div>
 {% endblock %}

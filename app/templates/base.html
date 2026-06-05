@@ -22,7 +22,7 @@
 
     <!-- Ad Banner Space -->
     <div class="ad-banner">
-        <p>Sponsored Advertisement Space - Innovative Monetization Model</p>
+        <p>{{ _t('Sponsored Advertisement Space - Innovative Monetization Model') }}</p>
     </div>
 
     <!-- Header -->
@@ -63,7 +63,7 @@
         <div class="container footer-content">
             <div class="footer-brand">
                 <div class="logo-icon"></div>
-                <p>{{ SITE_NAME }} - Discover alternative accommodations in remote areas of Algeria.</p>
+                <p>{{ SITE_NAME }} - {{ _t('Discover alternative accommodations in remote areas of Algeria.') }}</p>
             </div>
             <div class="footer-links">
                 <a href="{{ url_for('main.index') }}">{{ _t('Home') }}</a>
@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 {{ SITE_NAME }}. Innovative Project Label Candidate.</p>
+            <p>&copy; 2026 {{ SITE_NAME }}. {{ _t('Innovative Project Label Candidate.') }}</p>
         </div>
     </footer>
 

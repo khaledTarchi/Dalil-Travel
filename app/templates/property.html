@@ -14,19 +14,19 @@
         <div class="details-section">
             <div class="property-region" style="color: var(--secondary); margin-bottom: 0.5rem;"><i class="fa-solid fa-location-dot"></i> {{ property.region }}</div>
             <h1>{{ property.title }}</h1>
-            <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">Hosted by {{ property.host.first_name }} {{ property.host.last_name }}</p>
+            <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">{{ _t('Hosted by') }} {{ property.host.first_name }} {{ property.host.last_name }}</p>
             
-            <h3>About this place</h3>
+            <h3>{{ _t('About this place') }}</h3>
             <p>{{ property.description }}</p>
             
-            <h3 style="margin-top: 2rem;">Location</h3>
+            <h3 style="margin-top: 2rem;">{{ _t('Location') }}</h3>
             <div id="property-map" data-lat="{{ property.lat }}" data-lng="{{ property.lng }}" style="width: 100%; height: 300px; border-radius: var(--border-radius); border: 1px solid var(--border); z-index: 1;"></div>
             
-            <h3 style="margin-top: 2rem;">Amenities & Connectivity</h3>
+            <h3 style="margin-top: 2rem;">{{ _t('Amenities & Connectivity') }}</h3>
             <div class="connectivity-index" style="border:none; padding: 0; font-size: 1rem;">
                 <div class="connectivity-item" style="margin-right: 2rem;">
                     <i class="fa-solid fa-wifi" style="color: {{ 'var(--secondary)' if property.has_internet else 'var(--text-muted)' }};"></i>
-                    <span>{{ property.internet_quality if property.has_internet else 'No Internet' }}</span>
+                    <span>{{ property.internet_quality if property.has_internet else _t('No Internet') }}</span>
                 </div>
                 <div class="connectivity-item" style="margin-right: 2rem;">
                     <i class="fa-solid fa-bolt" style="color: #d4af37;"></i>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="connectivity-item">
                     <i class="fa-solid fa-user-group"></i> 
-                    <span>Up to {{ property.capacity }} guests</span>
+                    <span>{{ _t('Up to') }} {{ property.capacity }} {{ _t('guests') }}</span>
                 </div>
             </div>
         </div>
@@ -42,16 +42,16 @@
     
     <div class="property-sidebar">
         <div class="booking-widget">
-            <h2 id="base-price" data-price="{{ property.price_per_night }}">{{ property.price_per_night }} {{ CURRENCY }} <span style="font-size: 1rem; color: var(--text-muted); font-weight: normal;">/ night</span></h2>
+            <h2 id="base-price" data-price="{{ property.price_per_night }}">{{ property.price_per_night }} {{ CURRENCY }} <span style="font-size: 1rem; color: var(--text-muted); font-weight: normal;">/ {{ _t('night') }}</span></h2>
             
             <form id="booking-form" action="#" method="POST">
                 <div class="form-group" style="margin-top: 1.5rem;">
-                    <label for="num-nights">Number of Nights</label>
+                    <label for="num-nights">{{ _t('Number of Nights') }}</label>
                     <input type="number" id="num-nights" name="num_nights" class="form-control" value="1" min="1" max="30">
                 </div>
                 
                 <h3 style="margin-top: 2rem; font-size: 1.25rem;">{{ _t('Local Meals') }} (Optional)</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Add authentic local meals prepared by your host.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">{{ _t('Add authentic local meals prepared by your host.') }}</p>
                 
                 <div class="meals-list">
                     {% for meal in property.meals %}
@@ -66,12 +66,12 @@
                         <div style="font-weight: 600;">+{{ meal.price }} {{ CURRENCY }}</div>
                     </div>
                     {% else %}
-                    <p style="color: var(--text-muted); font-style: italic;">No meals listed for this property.</p>
+                    <p style="color: var(--text-muted); font-style: italic;">{{ _t('No meals listed for this property.') }}</p>
                     {% endfor %}
                 </div>
                 
                 <div class="total-price">
-                    <span>Total:</span>
+                    <span>{{ _t('Total') }}:</span>
                     <span id="total-price">{{ property.price_per_night }} {{ CURRENCY }}</span>
                 </div>
                 
@@ -87,8 +87,8 @@
 <div id="payment-modal-overlay" class="modal-overlay">
     <div class="payment-modal">
         <span class="close-modal" id="close-payment-modal">&times;</span>
-        <h2>Complete Booking</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">Please select your payment method.</p>
+        <h2>{{ _t('Complete Booking') }}</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">{{ _t('Please select your payment method.') }}</p>
         
         <div id="payment-form-inner">
             <div class="payment-logos">
@@ -97,28 +97,28 @@
             </div>
             
             <div class="form-group">
-                <label>Card Number (Mockup)</label>
+                <label>{{ _t('Card Number (Mockup)') }}</label>
                 <input type="text" class="form-control" placeholder="0000 0000 0000 0000" value="1234 5678 9012 3456">
             </div>
             
             <div style="display: flex; gap: 1rem;">
                 <div class="form-group" style="flex: 1;">
-                    <label>Expiry</label>
+                    <label>{{ _t('Expiry') }}</label>
                     <input type="text" class="form-control" placeholder="MM/YY" value="12/28">
                 </div>
                 <div class="form-group" style="flex: 1;">
-                    <label>CVV</label>
+                    <label>{{ _t('CVV') }}</label>
                     <input type="password" class="form-control" placeholder="123" value="123">
                 </div>
             </div>
             
-            <button id="mock-pay-btn" class="btn-primary" style="width: 100%; margin-top: 1rem;">Confirm Payment & Book</button>
+            <button id="mock-pay-btn" class="btn-primary" style="width: 100%; margin-top: 1rem;">{{ _t('Confirm Payment & Book') }}</button>
         </div>
         
         <div id="payment-success-msg" class="success-message">
             <i class="fa-solid fa-circle-check" style="font-size: 3rem; margin-bottom: 1rem; color: var(--secondary);"></i>
-            <h3>Payment Successful!</h3>
-            <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem;">Your booking is confirmed.</p>
+            <h3>{{ _t('Payment Successful!') }}</h3>
+            <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem;">{{ _t('Your booking is confirmed.') }}</p>
         </div>
     </div>
 </div>

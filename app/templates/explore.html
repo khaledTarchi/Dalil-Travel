@@ -11,7 +11,7 @@
     {% if region %}
         <h2>{{ _t('Explore') }} {{ region }}</h2>
     {% else %}
-        <h2>{{ _t('Explore') }} All Destinations</h2>
+        <h2>{{ _t('Explore All Destinations') }}</h2>
     {% endif %}
     
     <!-- Map showing the properties in this region -->
@@ -24,12 +24,12 @@
             <div class="property-content">
                 <div class="property-region"><i class="fa-solid fa-location-dot"></i> {{ prop.region }}</div>
                 <h3 class="property-title">{{ prop.title }}</h3>
-                <div class="property-price">{{ prop.price_per_night }} {{ CURRENCY }} <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: normal;">/ night</span></div>
+                <div class="property-price">{{ prop.price_per_night }} {{ CURRENCY }} <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: normal;">/ {{ _t('night') }}</span></div>
                 
                 <div class="connectivity-index">
                     <div class="connectivity-item">
                         <i class="fa-solid fa-wifi" style="color: {{ 'var(--secondary)' if prop.has_internet else 'var(--text-muted)' }};"></i>
-                        <span>{{ prop.internet_quality if prop.has_internet else 'No Internet' }}</span>
+                        <span>{{ prop.internet_quality if prop.has_internet else _t('No Internet') }}</span>
                     </div>
                     <div class="connectivity-item">
                         <i class="fa-solid fa-bolt" style="color: #d4af37;"></i>
@@ -42,7 +42,7 @@
             </div>
         </a>
         {% else %}
-        <p>No accommodations found for this region.</p>
+        <p>{{ _t('No accommodations found for this region.') }}</p>
         {% endfor %}
     </div>
 </div>
