@@ -2,21 +2,34 @@ import urllib.request
 import os
 
 images = {
-    "oran.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Oran_-_Algeria.jpg/800px-Oran_-_Algeria.jpg",
-    "sahara.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Sahara_desert.jpg/800px-Sahara_desert.jpg",
-    "tlemcen.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Mansourah_Tlemcen.jpg/800px-Mansourah_Tlemcen.jpg",
-    "constantine.jpg": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Pont_Sidi_M%27Cid_Constantine.jpg/800px-Pont_Sidi_M%27Cid_Constantine.jpg"
+    # Location Cards (Actual Places)
+    "tassili_location.jpg": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Tassili_N%27Ajjer_National_Park_1.jpg",
+    "brezina_location.jpg": "https://upload.wikimedia.org/wikipedia/commons/f/f5/La_mairie_Brezina_%D8%A8%D9%84%D8%AF%D9%8A%D8%A9_%D8%A8%D8%B1%D9%8A%D8%B2%D9%8A%D9%86%D8%A9.jpg",
+    "timimoun_location.jpg": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Entr%C3%A9e_de_Timimoun_%D8%AA%D9%8A%D9%85%D9%8A%D9%85%D9%88%D9%86.jpg",
+    "djanet_location.jpg": "https://upload.wikimedia.org/wikipedia/commons/2/28/Djanet.jpg",
+    
+    # Guesthouses / Accommodations
+    "tassili_guesthouse.jpg": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Tassili_Najjer_%28Tuareg_camp%29.jpg",
+    "brezina_guesthouse.jpg": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Oasis_Brezina.jpg",
+    "timimoun_guesthouse.jpg": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Ksar_timimoun.jpg",
+    "djanet_guesthouse.jpg": "https://upload.wikimedia.org/wikipedia/commons/0/02/Bivouac_Tadrart_Rouge.jpg",
+    
+    # Ad Image (Banana)
+    "ad_banana.jpg": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg"
 }
 
-os.makedirs('app/static/img', exist_ok=True)
+output_dir = os.path.join("app", "static", "img")
+os.makedirs(output_dir, exist_ok=True)
 
-for name, url in images.items():
+req_headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+
+for filename, url in images.items():
+    filepath = os.path.join(output_dir, filename)
+    print(f"Downloading {filename} from {url}...")
     try:
-        # User-agent header is sometimes required by Wikipedia
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req) as response, open(os.path.join('app/static/img', name), 'wb') as out_file:
-            data = response.read()
-            out_file.write(data)
-        print(f"Successfully downloaded {name}")
+        req = urllib.request.Request(url, headers=req_headers)
+        with urllib.request.urlopen(req) as response, open(filepath, 'wb') as out_file:
+            out_file.write(response.read())
+        print(f"Success: {filename}")
     except Exception as e:
-        print(f"Failed to download {name}: {e}")
+        print(f"Failed to download {filename}: {e}")

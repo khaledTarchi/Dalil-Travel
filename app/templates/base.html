@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ SITE_NAME }}</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block head %}{% endblock %}
+</head>
+<body dir="{{ 'rtl' if current_lang == 'ar' else 'ltr' }}">
+
+    <!-- Ad Banner Space -->
+    <div class="ad-banner">
+        <p>Sponsored Advertisement Space - Innovative Monetization Model</p>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header glass-effect">
+        <div class="container header-container">
+            <!-- Pure CSS Logo -->
+            <a href="{{ url_for('main.index') }}" class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">{{ SITE_NAME }}</span>
+            </a>
+            
+            <nav class="desktop-nav">
+                <a href="{{ url_for('main.index') }}">{{ _t('Home') }}</a>
+                <a href="{{ url_for('main.explore') }}">{{ _t('Explore') }}</a>
+                <a href="{{ url_for('main.about') }}">{{ _t('About') }}</a>
+                <a href="{{ url_for('main.register_property') }}" class="btn-primary">{{ _t('Register Property') }}</a>
+                
+                <div class="language-switcher">
+                    <form action="" method="get" id="lang-form">
+                        <select name="lang" onchange="document.getElementById('lang-form').submit()">
+                            <option value="en" {% if current_lang == 'en' %}selected{% endif %}>EN</option>
+                            <option value="fr" {% if current_lang == 'fr' %}selected{% endif %}>FR</option>
+                            <option value="ar" {% if current_lang == 'ar' %}selected{% endif %}>عربي</option>
+                        </select>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div class="logo-icon"></div>
+                <p>{{ SITE_NAME }} - Discover alternative accommodations in remote areas of Algeria.</p>
+            </div>
+            <div class="footer-links">
+                <a href="{{ url_for('main.index') }}">{{ _t('Home') }}</a>
+                <a href="{{ url_for('main.explore') }}">{{ _t('Explore') }}</a>
+                <a href="{{ url_for('main.about') }}">{{ _t('About') }}</a>
+                <a href="{{ url_for('main.register_property') }}">{{ _t('Register Property') }}</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 {{ SITE_NAME }}. Innovative Project Label Candidate.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

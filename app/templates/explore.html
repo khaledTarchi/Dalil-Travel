@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block head %}
+<!-- Leaflet.js for Maps -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    {% if region %}
+        <h2>{{ _t('Explore') }} {{ region }}</h2>
+    {% else %}
+        <h2>{{ _t('Explore') }} All Destinations</h2>
+    {% endif %}
+    
+    <!-- Map showing the properties in this region -->
+    <div id="explore-map" style="width: 100%; height: 400px; border-radius: var(--border-radius); margin-bottom: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-sm); z-index: 1;"></div>
+
+    <div class="explore-grid">
+        {% for prop in properties %}
+        <a href="{{ url_for('main.property_details', id=prop.id) }}" class="property-card" data-lat="{{ prop.lat }}" data-lng="{{ prop.lng }}" data-title="{{ prop.title }}" data-url="{{ url_for('main.property_details', id=prop.id) }}">
+            <img src="{{ prop.image_url }}" alt="{{ prop.title }}" class="property-img">
+            <div class="property-content">
+                <div class="property-region"><i class="fa-solid fa-location-dot"></i> {{ prop.region }}</div>
+                <h3 class="property-title">{{ prop.title }}</h3>
+                <div class="property-price">{{ prop.price_per_night }} {{ CURRENCY }} <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: normal;">/ night</span></div>
+                
+                <div class="connectivity-index">
+                    <div class="connectivity-item">
+                        <i class="fa-solid fa-wifi" style="color: {{ 'var(--secondary)' if prop.has_internet else 'var(--text-muted)' }};"></i>
+                        <span>{{ prop.internet_quality if prop.has_internet else 'No Internet' }}</span>
+                    </div>
+                    <div class="connectivity-item">
+                        <i class="fa-solid fa-bolt" style="color: #d4af37;"></i>
+                        <span>{{ prop.power_source }}</span>
+                    </div>
+                    <div class="connectivity-item" style="margin-left: auto;">
+                        <i class="fa-solid fa-user-group"></i> {{ prop.capacity }}
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% else %}
+        <p>No accommodations found for this region.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mapElement = document.getElementById('explore-map');
+        if (mapElement && typeof L !== 'undefined') {
+            const map = L.map('explore-map');
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 18,
+            }).addTo(map);
+
+            const desertIcon = L.divIcon({
+                className: 'custom-map-icon',
+                html: '<div style="background-color: var(--primary); width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+
+            const cards = document.querySelectorAll('.property-card');
+            const bounds = [];
+            
+            cards.forEach(card => {
+                const lat = parseFloat(card.dataset.lat);
+                const lng = parseFloat(card.dataset.lng);
+                const title = card.dataset.title;
+                const url = card.dataset.url;
+                
+                if(!isNaN(lat) && !isNaN(lng)) {
+                    bounds.push([lat, lng]);
+                    L.marker([lat, lng], {icon: desertIcon}).addTo(map)
+                        .bindPopup(`<b>${title}</b><br><a href="${url}">View Details</a>`);
+                }
+            });
+            
+            if(bounds.length > 0) {
+                map.fitBounds(bounds, {padding: [50, 50]});
+            } else {
+                map.setView([28.0339, 1.6596], 5); // Default to center of Algeria
+            }
+        }
+    });
+</script>
+{% endblock %}

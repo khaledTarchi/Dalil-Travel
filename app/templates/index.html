@@ -1,102 +1,177 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dalil Travel</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome for Icons (No Emojis allowed) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Leaflet.js for Maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% extends "base.html" %}
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <header class="glass-header">
-        <div class="logo" onclick="window.app.showLogoModal()" style="cursor: pointer;">
-            <i class="fa-solid fa-compass"></i> Dalil Travel
+{% block head %}
+<!-- Removed map from home page per user request -->
+<style>
+/* Auto-changing background slider for hero */
+.hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 4rem 0;
+    overflow: hidden;
+}
+
+.hero-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.hero-slide::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+}
+
+.hero-slide.active {
+    opacity: 1;
+}
+
+/* Make text readable on dark background */
+.hero-content {
+    background: rgba(253, 250, 246, 0.95);
+    z-index: 2;
+}
+
+/* Home Advertisement Section */
+.home-ad {
+    background: #fcf8f2;
+    border: 2px dashed var(--primary-light);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.home-ad::before {
+    content: 'ADVERTISEMENT';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--primary-light);
+    color: white;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-bottom-right-radius: 8px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-slider" id="heroSlider">
+        <!-- High quality Unsplash images of desert/sahara/nature -->
+        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=1920&auto=format&fit=crop');"></div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?q=80&w=1920&auto=format&fit=crop');"></div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?q=80&w=1920&auto=format&fit=crop');"></div>
+    </div>
+    
+    <div class="container" style="position: relative; height: 100%; display: flex; align-items: center; z-index: 2;">
+        <div class="hero-content">
+            <h1>{{ _t("Discover Algeria's Hidden Gems") }}</h1>
+            <p>{{ _t("Book exclusive guesthouses, eco-lodges, and alternative accommodations in the most remote and breathtaking regions of the Sahara.") }}</p>
+            
+            <form action="{{ url_for('main.explore') }}" method="GET" class="search-bar">
+                <input type="text" name="region" placeholder="{{ _t('Search by region (e.g. Tassili, Brezina...)') }}" required>
+                <button type="submit" class="btn-primary">{{ _t('Search') }}</button>
+            </form>
         </div>
-        <nav id="desktop-nav">
-            <div class="language-switcher">
-                <button onclick="window.i18n.setLanguage('en')">EN</button>
-                <button onclick="window.i18n.setLanguage('fr')">FR</button>
-                <button onclick="window.i18n.setLanguage('ar')">عربي</button>
+    </div>
+</section>
+
+<section class="container" style="margin-top: 4rem;">
+    <!-- Attractive Advertisement -->
+    <div class="home-ad" style="display: flex; align-items: center; text-align: left; gap: 2rem;">
+        <img src="{{ url_for('static', filename='img/banana_ad.png') }}" alt="Banana Ad" style="width: 300px; height: 200px; object-fit: cover; border-radius: 8px;">
+        <div>
+            <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">{{ _t("Explore the Sahara with Tuareg 4x4 Tours!") }}</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">{{ _t("Exclusive 20% off for OasisStay members on 5-day expeditions across the Tassili N'Ajjer.") }}</p>
+            <button class="btn-primary">{{ _t("Claim Offer Now") }}</button>
+        </div>
+    </div>
+
+    <h2 style="margin-top: 4rem;">{{ _t("Popular Regions") }}</h2>
+    <div class="explore-grid">
+        <!-- Location Card 1 -->
+        <a href="{{ url_for('main.explore', region='Tassili') }}" class="property-card">
+            <!-- Region Image -->
+            <img src="{{ url_for('static', filename='img/tassili_location.png') }}" alt="Tassili N'Ajjer" class="property-img">
+            <div class="property-content">
+                <h3 class="property-title">Tassili N'Ajjer</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">{{ _t("Explore ancient rock art and alien landscapes in the deep south.") }}</p>
             </div>
-            <a href="/partner" data-link class="partner-link" data-i18n="menu.partner">Join as Partner</a>
-            <div class="menu-toggle" id="menu-toggle">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-        </nav>
+        </a>
         
-        <div class="mobile-menu" id="mobile-menu">
-            <ul>
-                <li><a href="/" data-link onclick="document.getElementById('mobile-menu').classList.remove('active')"><i class="fa-solid fa-house"></i> <span data-i18n="menu.home">Home</span></a></li>
-                <li><a href="/dashboard" data-link onclick="document.getElementById('mobile-menu').classList.remove('active')"><i class="fa-solid fa-suitcase"></i> <span data-i18n="menu.dashboard">Dashboard</span></a></li>
-                <li><a href="/partner" data-link onclick="document.getElementById('mobile-menu').classList.remove('active')"><i class="fa-solid fa-handshake"></i> <span data-i18n="menu.partner">Join as Partner</span></a></li>
-                <li id="emergency-btn"><a href="#" onclick="window.app.showEmergencyModal()"><i class="fa-solid fa-truck-medical"></i> <span data-i18n="menu.emergency">Emergency</span></a></li>
-                <li id="auth-menu-item"><a href="/login" data-link onclick="document.getElementById('mobile-menu').classList.remove('active')"><i class="fa-solid fa-user"></i> <span data-i18n="menu.login">Login / Register</span></a></li>
-                <li id="logout-menu-item" style="display: none;"><a href="#" onclick="window.app.logout()"><i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="menu.logout">Logout</span></a></li>
-            </ul>
-        </div>
-    </header>
-
-    <main id="app">
-        <!-- SPA content injected here -->
-    </main>
-
-    <!-- Bottom Navigation Bar (Mobile) -->
-    <div class="bottom-nav">
-        <a href="/" data-link class="active" id="bnav-home"><i class="fa-solid fa-house"></i><span data-i18n="menu.home">Home</span></a>
-        <a href="/favorites" data-link id="bnav-favorites"><i class="fa-solid fa-heart"></i><span data-i18n="menu.favorites">Favorites</span></a>
-        <a href="/dashboard" data-link id="bnav-bookings"><i class="fa-solid fa-suitcase"></i><span data-i18n="menu.dashboard">Bookings</span></a>
-        <a href="/login" data-link id="bnav-profile"><i class="fa-solid fa-user"></i><span data-i18n="menu.profile">Profile</span></a>
-    </div>
-
-    <!-- Emergency Modal -->
-    <div id="emergency-modal" class="modal">
-        <div class="modal-content glass-panel">
-            <span class="close-modal" onclick="window.app.closeEmergencyModal()">&times;</span>
-            <h2 data-i18n="emergency.title">Emergency Services</h2>
-            <div class="emergency-grid">
-                <button class="emergency-btn police"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="emergency.police">Police (17)</span></button>
-                <button class="emergency-btn gendarmerie"><i class="fa-solid fa-building-shield"></i> <span data-i18n="emergency.gendarmerie">Gendarmerie (1055)</span></button>
-                <button class="emergency-btn ambulance"><i class="fa-solid fa-truck-medical"></i> <span data-i18n="emergency.ambulance">Ambulance (14)</span></button>
-                <button class="emergency-btn civil"><i class="fa-solid fa-fire-extinguisher"></i> <span data-i18n="emergency.civil">Civil Protection (14)</span></button>
+        <!-- Location Card 2 -->
+        <a href="{{ url_for('main.explore', region='Brezina') }}" class="property-card">
+            <!-- Region Image -->
+            <img src="{{ url_for('static', filename='img/brezina_location.png') }}" alt="Brezina" class="property-img">
+            <div class="property-content">
+                <h3 class="property-title">Brezina</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">{{ _t("The oasis of clay castles and serene palm groves.") }}</p>
             </div>
-        </div>
+        </a>
+        
+        <!-- Location Card 3 -->
+        <a href="{{ url_for('main.explore', region='Timimoun') }}" class="property-card">
+            <!-- Region Image -->
+            <img src="{{ url_for('static', filename='img/timimoun_location.png') }}" alt="Timimoun" class="property-img">
+            <div class="property-content">
+                <h3 class="property-title">Timimoun</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">{{ _t("The red oasis on the edge of the great sand sea.") }}</p>
+            </div>
+        </a>
+        
+        <!-- Location Card 4 -->
+        <a href="{{ url_for('main.explore', region='Djanet') }}" class="property-card">
+            <!-- Region Image -->
+            <img src="{{ url_for('static', filename='img/djanet_location.png') }}" alt="Djanet" class="property-img">
+            <div class="property-content">
+                <h3 class="property-title">Djanet</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">{{ _t("The magic of the red desert and rock formations.") }}</p>
+            </div>
+        </a>
     </div>
+</section>
+{% endblock %}
 
-    <!-- Logo Modal -->
-    <div id="logo-modal" class="modal">
-        <div class="modal-content glass-panel" style="text-align: center; max-width: 500px;">
-            <span class="close-modal" onclick="window.app.closeLogoModal()">&times;</span>
-            <img src="/static/img/dalil_logo.png" alt="Dalil Travel Logo" style="width: 100%; max-width: 300px; border-radius: 12px; margin-top: 1rem;">
-            <h2 style="margin-top: 1rem; color: var(--primary);">Dalil Travel</h2>
-            <p data-i18n="home.hero.title" style="color: #666;">Discover the Magic of Algeria</p>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="/static/js/api.js"></script>
-    <script src="/static/js/state.js"></script>
-    <script src="/static/js/i18n.js"></script>
-    <script src="/static/js/router.js"></script>
-    <script src="/static/js/app.js"></script>
-
-    <!-- Global Loader -->
-    <div id="global-loader">
-        <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-        <h3 data-i18n="loader.text" style="color: var(--primary);">Loading...</h3>
-    </div>
-
-    <!-- Toast Notifications Container -->
-    <div id="toast-container" class="toast-container"></div>
-</body>
-</html>
+{% block scripts %}
+<script>
+    // Simple logic for the hero image slider
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.hero-slide');
+        if (slides.length === 0) return;
+        
+        let currentSlide = 0;
+        
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000); // Change image every 5 seconds
+    });
+</script>
+{% endblock %}
