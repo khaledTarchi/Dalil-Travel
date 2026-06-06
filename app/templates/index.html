@@ -53,15 +53,15 @@
 <div class="container home-wrapper" style="position: relative; z-index: 2; height: calc(100vh - 100px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2vh 0;">
     
     <!-- Logo & Subtitle floating over background -->
-    <div style="text-align: center; margin-bottom: 2vh; width: 100%;">
-        <img src="{{ url_for('static', filename='img/new_logo.png') }}" alt="{{ SITE_NAME }}" style="height: 15vh; max-height: 120px; min-height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">
-        <p style="margin: 1.5vh auto 0; color: white; font-size: 1.1rem; max-width: 800px; text-shadow: 1px 1px 4px rgba(0,0,0,0.9); font-weight: 500; line-height: 1.4;">
+    <div style="text-align: center; margin-bottom: 1vh; width: 100%;">
+        <img src="{{ url_for('static', filename='img/new_logo.png') }}" alt="{{ SITE_NAME }}" style="height: 10vh; max-height: 80px; min-height: 50px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">
+        <p style="margin: 1vh auto 0; color: white; font-size: 1.1rem; max-width: 800px; text-shadow: 1px 1px 4px rgba(0,0,0,0.9); font-weight: 500; line-height: 1.4;">
             {{ _t("Book exclusive guesthouses, eco-lodges, and alternative accommodations in the most remote and breathtaking regions of the Sahara.") }}
         </p>
     </div>
     
     <!-- Search Bar directly on background -->
-    <form action="{{ url_for('main.explore') }}" method="GET" class="search-bar compact-search" style="margin-bottom: 4vh; width: 100%; max-width: 700px;">
+    <form action="{{ url_for('main.explore') }}" method="GET" class="search-bar compact-search" style="margin-bottom: 2vh; width: 100%; max-width: 700px;">
         <input type="text" name="region" placeholder="{{ _t('Search by region (e.g. Tassili, Brezina...)') }}" required style="box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-size: 1.1rem; padding: 1rem 1.5rem;">
         <button type="submit" class="btn-primary" style="box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-size: 1.1rem; padding: 1rem 2rem;">{{ _t('Search') }}</button>
     </form>

@@ -2,6 +2,24 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     
+    // --- MOBILE NAVIGATION ---
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            // Toggle icon between bars and times
+            const icon = mobileMenuBtn.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
     // --- MAP LOGIC (Home Page) ---
     const mapElement = document.getElementById('map');
     if (mapElement && typeof L !== 'undefined') {
