@@ -88,5 +88,11 @@
     "Host Information": "معلومات المضيف",
     "No Internet": "لا يوجد إنترنت",
     "Our platform focuses exclusively on properties that offer a true connection to the land and its culture. Whether it's a clay castle in Brezina or an eco-camp under the stars in Tassili N'Ajjer, every stay is an experience.": "تركز منصتنا حصرياً على العقارات التي تقدم اتصالاً حقيقياً بالأرض وثقافتها.",
-    "Show All": "عرض الكل"
+    "Show All": "عرض الكل",
+    "Property Title": "عنوان العقار",
+    "e.g. Desert Eco-Lodge": "مثل: نزل صحراوي بيئي",
+    "Region / Destination": "المنطقة / الوجهة",
+    "Select a region": "اختر منطقة",
+    "Price Per Night (DZD)": "السعر لليلة (د.ج)",
+    "Upload Property Images": "رفع صور العقار"
 }

@@ -7,7 +7,7 @@
         <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">{{ _t('Join our platform to list your guesthouse or eco-lodge. Share the beauty of your isolated region with travelers from around the world.') }}</p>
     </div>
 
-    <form class="registration-form" action="{{ url_for('main.register_property') }}" method="POST">
+    <form class="registration-form" action="{{ url_for('main.register_property') }}" method="POST" enctype="multipart/form-data">
         <h3>{{ _t('Host Information') }}</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
             <div class="form-group">
@@ -22,13 +22,38 @@
         
         <h3 style="margin-top: 2rem;">{{ _t('Property Details') }}</h3>
         <div class="form-group">
+            <label for="title">{{ _t('Property Title') }}</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="{{ _t('e.g. Desert Eco-Lodge') }}" required>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+                <label for="region">{{ _t('Region / Destination') }}</label>
+                <select id="region" name="region" class="form-control" required>
+                    <option value="" disabled selected>{{ _t('Select a region') }}</option>
+                    <option value="Brezina">Brezina</option>
+                    <option value="Timimoun">Timimoun</option>
+                    <option value="Tassili">Tassili</option>
+                    <option value="Djanet">Djanet</option>
+                    <option value="Taghit">Taghit</option>
+                    <option value="Ghardaia">Ghardaia</option>
+                    <option value="Tamanrasset">Tamanrasset</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price_per_night">{{ _t('Price Per Night (DZD)') }}</label>
+                <input type="number" id="price_per_night" name="price_per_night" class="form-control" min="0" required>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label for="address">{{ _t('Full Address / Location Coordinates') }}</label>
             <input type="text" id="address" name="address" class="form-control" placeholder="{{ _t('e.g. Oasis of Tiout, Naama...') }}" required>
         </div>
         
         <div class="form-group">
-            <label for="image_urls">{{ _t('Image URLs (comma separated)') }}</label>
-            <input type="url" id="image_urls" name="image_urls" class="form-control" placeholder="https://example.com/image1.jpg, ...">
+            <label for="images">{{ _t('Upload Property Images') }}</label>
+            <input type="file" id="images" name="images" class="form-control" accept="image/*" required>
         </div>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
