@@ -74,7 +74,9 @@ def register_property():
         from ..models import User
         host = User.query.filter_by(role='host').first()
         if not host:
-            host = User(first_name=full_name, last_name='(Host)', email=f'{phone}@host.dz', password='password', role='host')
+            safe_name = full_name if full_name else 'Host'
+            safe_phone = phone if phone else '000000000'
+            host = User(first_name=safe_name, last_name='(Host)', email=f'{safe_phone}@host.dz', password='password', role='host')
             db.session.add(host)
             db.session.commit()
             
@@ -95,9 +97,9 @@ def register_property():
         
         # Also store the original RegistrationRequest for record keeping
         request_obj = RegistrationRequest(
-            full_name=full_name,
-            phone=phone,
-            address=address,
+            full_name=full_name if full_name else 'Unknown',
+            phone=phone if phone else 'Unknown',
+            address=address if address else 'Unknown',
             image_urls=image_url,
             capacity=int(capacity) if capacity else 2,
             has_internet=has_internet,

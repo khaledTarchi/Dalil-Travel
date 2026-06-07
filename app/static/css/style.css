@@ -655,8 +655,9 @@ textarea.form-control {
 
 /* No Scroll Body for Home Page */
 body.no-scroll {
-    overflow: hidden;
-    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100vh;
 }
 
 body.no-scroll .main-footer {
@@ -674,6 +675,7 @@ body.no-scroll .main-footer {
     display: flex;
     gap: 20px;
     justify-content: center;
+    flex-wrap: wrap;
     width: 100%;
     margin-bottom: 2vh;
 }
@@ -683,8 +685,8 @@ body.no-scroll .main-footer {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    flex: 1 1 30%;
-    max-width: 33%;
+    flex: 1 1 250px;
+    max-width: 300px;
     transition: var(--transition);
     border: none;
     display: flex;
